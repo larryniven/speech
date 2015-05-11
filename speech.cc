@@ -4,6 +4,48 @@
 
 namespace speech {
 
+    std::vector<segment> load_segments(std::istream& is)
+    {
+        std::vector<segment> result;
+        std::string line;
+    
+        std::getline(is, line);
+        while (std::getline(is, line) && line != ".") {
+            auto parts = ebt::split(line);
+    
+            result.push_back(segment { 
+                .start_time = std::stoi(parts[0]),
+                .end_time = std::stoi(parts[1]),
+                .label = parts[2]
+            });
+        }
+    
+        return result;
+    }
+
+    std::vector<std::vector<double>> load_frames(std::string filename, int nfeat)
+    {
+        std::vector<std::vector<double>> result;
+        std::ifstream ifs { filename };
+    
+        std::string line;
+        while (std::getline(ifs, line)) {
+            std::vector<double> vec;
+    
+            std::vector<std::string> parts = ebt::split(line);
+            for (auto& p: parts) {
+                if (vec.size() == nfeat) {
+                    break;
+                }
+                vec.push_back(std::stod(p));
+            }
+    
+            result.push_back(vec);
+        }
+    
+        return result;
+    }
+    
     std::unordered_set<std::string> load_phone_set(std::string filename)
     {
         std::unordered_set<std::string> result;
@@ -107,27 +149,4 @@ namespace speech {
         return result;
     }
 
-    std::vector<std::vector<double>> load_frames(std::string filename, int nfeat)
-    {
-        std::vector<std::vector<double>> result;
-        std::ifstream ifs { filename };
-    
-        std::string line;
-        while (std::getline(ifs, line)) {
-            std::vector<double> vec;
-    
-            std::vector<std::string> parts = ebt::split(line);
-            for (auto& p: parts) {
-                if (vec.size() == nfeat) {
-                    break;
-                }
-                vec.push_back(std::stod(p));
-            }
-    
-            result.push_back(vec);
-        }
-    
-        return result;
-    }
-    
 }
