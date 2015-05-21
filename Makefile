@@ -1,4 +1,5 @@
 CXXFLAGS += -std=c++11 -I .. -L ../ebt
+AR = gcc-ar
 
 .PHONY: all clean
 

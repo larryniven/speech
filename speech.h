@@ -14,7 +14,7 @@ namespace speech {
 
     std::vector<segment> load_segments(std::istream& is);
 
-    std::vector<std::vector<double>> load_frames(std::string filename, int nfeat=39);
+    std::vector<std::vector<double>> load_frames(std::string filename, int nfeat=-1);
 
     std::unordered_set<std::string> load_phone_set(std::string filename);
 
