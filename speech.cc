@@ -62,15 +62,15 @@ namespace speech {
 
     std::vector<double>
     clarkson_moreno_feature(
-        std::vector<std::vector<double>> utt, int start, int end, int nfeat)
+        std::vector<std::vector<double>> utt, int start, int end, int start_dim, int end_dim)
     {
         std::vector<double> result;
     
         end = std::min<int>(utt.size(), end);
     
         int size = std::max<int>(0, end - start);
-    
-        int dim = std::min<int>(nfeat, utt[0].size());
+
+        int dim = end_dim - start_dim + 1;
     
         if (size <= 0) {
             result.resize(dim * 5 + 21);
@@ -82,8 +82,8 @@ namespace speech {
         vec.resize(dim);
     
         for (int i = start; i < size * 0.3 + start; ++i) {
-            for (int j = 0; j < dim; ++j) {
-                vec[j] += utt[i][j] / int(size * 0.3 + 1);
+            for (int j = start_dim; j < end_dim + 1; ++j) {
+                vec[j - start_dim] += utt[i][j] / int(size * 0.3 + 1);
             }
         }
     
@@ -94,8 +94,8 @@ namespace speech {
         vec.resize(dim);
     
         for (int i = size * 0.3 + start; i < size * 0.7 + start; ++i) {
-            for (int j = 0; j < dim; ++j) {
-                vec[j] += utt[i][j] / int(size * 0.4 + 1);
+            for (int j = start_dim; j < end_dim + 1; ++j) {
+                vec[j - start_dim] += utt[i][j] / int(size * 0.4 + 1);
             }
         }
     
@@ -106,8 +106,8 @@ namespace speech {
         vec.resize(dim);
     
         for (int i = size * 0.7 + start; i < size + start; ++i) {
-            for (int j = 0; j < dim; ++j) {
-                vec[j] += utt[i][j] / int(size * 0.3 + 1);
+            for (int j = start_dim; j < end_dim + 1; ++j) {
+                vec[j - start_dim] += utt[i][j] / int(size * 0.3 + 1);
             }
         }
     
@@ -118,8 +118,8 @@ namespace speech {
         vec.resize(dim);
     
         for (int i = std::max<int>(start - 2, 0); i < std::min<int>(start + 2, utt.size()); ++i) {
-            for (int j = 0; j < dim; ++j) {
-                vec[j] += utt[i][j] / 4;
+            for (int j = start_dim; j < end_dim + 1; ++j) {
+                vec[j - start_dim] += utt[i][j] / 4;
             }
         }
     
@@ -130,8 +130,8 @@ namespace speech {
         vec.resize(dim);
     
         for (int i = std::max<int>(end - 2, 0); i < std::min<int>(end + 2, utt.size()); ++i) {
-            for (int j = 0; j < dim; ++j) {
-                vec[j] += utt[i][j] / 4;
+            for (int j = start_dim; j < end_dim + 1; ++j) {
+                vec[j - start_dim] += utt[i][j] / 4;
             }
         }
     
@@ -147,6 +147,13 @@ namespace speech {
         result.push_back(1);
     
         return result;
+    }
+
+    std::vector<double>
+    clarkson_moreno_feature(
+        std::vector<std::vector<double>> utt, int start, int end, int nfeat)
+    {
+        return clarkson_moreno_feature(utt, start, end, 0, nfeat);
     }
 
 }

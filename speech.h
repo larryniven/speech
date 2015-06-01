@@ -21,6 +21,10 @@ namespace speech {
     std::vector<double> clarkson_moreno_feature(
         std::vector<std::vector<double>> utt, int start, int end, int nfeat=39);
 
+    std::vector<double> clarkson_moreno_feature(
+        std::vector<std::vector<double>> utt, int start, int end,
+        int start_dim, int end_dim);
+
 }
 
 #endif
