@@ -153,7 +153,7 @@ namespace speech {
     clarkson_moreno_feature(
         std::vector<std::vector<double>> utt, int start, int end, int nfeat)
     {
-        return clarkson_moreno_feature(utt, start, end, 0, nfeat);
+        return clarkson_moreno_feature(utt, start, end, 0, nfeat - 1);
     }
 
 }
