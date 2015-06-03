@@ -2,7 +2,7 @@
 #include <random>
 #include <fstream>
 #include "ebt/ebt.h"
-#include "speech-util/speech.h"
+#include "speech/speech.h"
 
 int main(int argc, char *argv[])
 {
