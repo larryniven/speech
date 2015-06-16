@@ -3,13 +3,16 @@ AR = gcc-ar
 
 .PHONY: all clean
 
-all: libspeech.a gen343
+all: libspeech.a gen343 gen-edges-343
 
 clean:
 	-rm *.o
-	-rm libspeech.a gen343
+	-rm libspeech.a gen343 gen-edges-343
 
 gen343: gen343.o libspeech.a
+	$(CXX) $(CXXFLAGS) -o $@ $^ -lebt
+
+gen-edges-343: gen-edges-343.o libspeech.a
 	$(CXX) $(CXXFLAGS) -o $@ $^ -lebt
 
 libspeech.a: speech.o
