@@ -41,52 +41,59 @@ int main(int argc, char *argv[])
         std::vector<std::vector<double>> frames = speech::load_frames(frame_file);
         std::vector<speech::segment> segments = speech::load_segments(segment_list);
 
-        speech::segment prev_seg;
-        prev_seg.start_time = -1;
-        prev_seg.end_time = -1;
+        int cur_seg = 0;
 
-        for (auto& s: segments) {
-            if (prev_seg.start_time == -1 && prev_seg.end_time == -1) {
-                prev_seg = s;
-                continue;
+        for (int t = 0; t < frames.size(); ++t) {
+            while (cur_seg < segments.size() && t > segments.at(cur_seg).end_time / 1e5) {
+                ++cur_seg;
             }
 
-            int prev_start_frame = int(prev_seg.start_time / 1e5);
-            int prev_end_frame = int(prev_seg.end_time / 1e5);
-            int prev_seg_len = prev_end_frame - prev_start_frame;
+            std::vector<std::vector<double>> fixed_window;
 
-            int start_frame = int(s.start_time / 1e5);
-            int end_frame = int(s.end_time / 1e5);
-            int seg_len = end_frame - start_frame;
+            for (int i = t - 9; i <= t + 9; ++i) {
+                int index = std::min<int>(std::max<int>(i, 0), frames.size() - 1);
 
-            for (int t = int(prev_start_frame + 0.5 * prev_seg_len);
-                    t < int(start_frame + 0.5 * seg_len); ++t) {
+                fixed_window.push_back(frames.at(index));
+            }
 
-                std::vector<std::vector<double>> fixed_window;
+            if (cur_seg < segments.size() && segments.at(cur_seg).start_time / 1e5 <= t
+                    && t <= segments.at(cur_seg).end_time / 1e5) {
 
-                for (int i = t - 9; i <= t + 9; ++i) {
-                    int index = std::min<int>(std::max<int>(i, 0), frames.size() - 1);
+                int mid_time = int((segments.at(cur_seg).start_time
+                    + segments.at(cur_seg).end_time) / 2 / 1e5);
 
-                    fixed_window.push_back(frames.at(index));
-                }
-
-                label_stream << phone_id[prev_seg.label]
-                    << " " << phone_id[s.label] << std::endl;
-
-                for (auto v: fixed_window) {
-                    for (auto e: v) {
-                        feature_stream << e << " ";
+                if (t > mid_time) {
+                    if (cur_seg == segments.size() - 1) {
+                        label_stream << phone_id[segments.at(cur_seg).label]
+                            << " " << 999 << std::endl;
+                    } else {
+                        label_stream << phone_id[segments.at(cur_seg).label]
+                            << " " << phone_id[segments.at(cur_seg + 1).label] << std::endl;
+                    }
+                } else {
+                    if (cur_seg == 0) {
+                        label_stream << 999
+                            << " " << phone_id[segments.at(cur_seg).label] << std::endl;
+                    } else {
+                        label_stream << phone_id[segments.at(cur_seg - 1).label]
+                            << " " << phone_id[segments.at(cur_seg).label] << std::endl;
                     }
                 }
-                feature_stream << std::endl;
-
-                if (count % 200 == 0) {
-                    std::cerr << count << "\r";
-                }
-                ++count;
+            } else {
+                label_stream << 999 << " " << 999 << std::endl;
             }
 
-            prev_seg = s;
+            for (auto v: fixed_window) {
+                for (auto e: v) {
+                    feature_stream << e << " ";
+                }
+            }
+            feature_stream << std::endl;
+
+            if (count % 200 == 0) {
+                std::cerr << count << "\r";
+            }
+            ++count;
         }
     }
 
