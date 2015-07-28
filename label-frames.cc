@@ -33,12 +33,14 @@ int main(int argc, char *argv[])
     std::ofstream feature_stream { argv[4] };
     std::ofstream label_stream { argv[5] };
 
+    int dim = std::stoi(argv[6]);
+
     std::string frame_file;
 
     int count = 0;
 
     while (std::getline(frame_list, frame_file)) {
-        std::vector<std::vector<double>> frames = speech::load_frames(frame_file);
+        std::vector<std::vector<double>> frames = speech::load_frames(frame_file, dim);
         std::vector<speech::segment> segments = speech::load_segments(segment_list);
 
         int cur_seg = 0;
