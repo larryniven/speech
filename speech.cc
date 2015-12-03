@@ -46,16 +46,15 @@ namespace speech {
         return result;
     }
     
-    std::vector<std::vector<double>> load_frames_batch(std::string filename, int nfeat)
+    std::vector<std::vector<double>> load_frames_batch(std::istream& is, int nfeat)
     {
         std::vector<std::vector<double>> result;
-        std::ifstream ifs { filename };
         std::string line;
 
         // read and discard file name
-        std::getline(ifs, line);
+        std::getline(is, line);
     
-        while (std::getline(ifs, line) && line != ".") {
+        while (std::getline(is, line) && line != ".") {
             std::vector<double> vec;
     
             std::vector<std::string> parts = ebt::split(line);
