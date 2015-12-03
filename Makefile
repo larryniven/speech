@@ -3,11 +3,13 @@ AR = gcc-ar
 
 .PHONY: all clean
 
-all: libspeech.a gen343 gen-edges-343 label-frames cat-frames shuffle-frames
+bin = gen343 gen-edges-343 label-frames cat-frames shuffle-frames
+
+all: libspeech.a $(bin)
 
 clean:
 	-rm *.o
-	-rm libspeech.a gen343 gen-edges-343 label-frames
+	-rm libspeech.a $(bin)
 
 gen343: gen343.o libspeech.a
 	$(CXX) $(CXXFLAGS) -o $@ $^ -lebt
