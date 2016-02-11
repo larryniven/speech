@@ -4,6 +4,19 @@
 
 namespace speech {
 
+    std::vector<std::string> load_label_batch(std::istream& is)
+    {
+        std::vector<std::string> result;
+        std::string line;
+    
+        std::getline(is, line);
+        while (std::getline(is, line) && line != ".") {
+            result.push_back(line);
+        }
+    
+        return result;
+    }
+
     std::vector<segment> load_segments(std::istream& is)
     {
         std::vector<segment> result;
@@ -46,7 +59,7 @@ namespace speech {
         return result;
     }
     
-    std::vector<std::vector<double>> load_frames_batch(std::istream& is, int nfeat)
+    std::vector<std::vector<double>> load_frame_batch(std::istream& is, int nfeat)
     {
         std::vector<std::vector<double>> result;
         std::string line;
@@ -71,15 +84,15 @@ namespace speech {
         return result;
     }
     
-    std::unordered_set<std::string> load_phone_set(std::string filename)
+    std::vector<std::string> load_label_set(std::string filename)
     {
-        std::unordered_set<std::string> result;
+        std::vector<std::string> result;
     
         std::ifstream ifs{filename};
     
         std::string line;
         while (std::getline(ifs, line)) {
-            result.insert(line);
+            result.push_back(line);
         }
     
         return result;

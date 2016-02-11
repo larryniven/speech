@@ -6,6 +6,8 @@
 
 namespace speech {
 
+    std::vector<std::string> load_label_batch(std::istream& is);
+
     struct segment {
         int start_time; // in 1e-7 s
         int end_time;
@@ -16,9 +18,9 @@ namespace speech {
 
     std::vector<std::vector<double>> load_frames(std::string filename, int nfeat=-1);
 
-    std::vector<std::vector<double>> load_frames_batch(std::istream& is, int nfeat=-1);
+    std::vector<std::vector<double>> load_frame_batch(std::istream& is, int nfeat=-1);
 
-    std::unordered_set<std::string> load_phone_set(std::string filename);
+    std::vector<std::string> load_label_set(std::string filename);
 
     std::vector<double> clarkson_moreno_feature(
         std::vector<std::vector<double>> utt, int start, int end, int nfeat=39);

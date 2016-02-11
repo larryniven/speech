@@ -31,7 +31,8 @@ int main(int argc, char *argv[])
     std::ifstream acoustic_list { args.at("acoustic-list") };
     std::ifstream gold_list { args.at("gold-list") };
     std::ifstream lattice_list { args.at("lattice-list") };
-    std::unordered_set<std::string> phone_set = speech::load_phone_set(args.at("phone-set"));
+    std::vector<std::string> phone_vec = speech::load_label_set(args.at("phone-set"));
+    std::unordered_set<std::string> phone_set { phone_vec.begin(), phone_vec.end() };
 
     std::unordered_map<std::string, int> phone_id;
     int i = 0;
