@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 
         std::vector<speech::segment> gold_segments = speech::load_segments(gold_list);
 
-        std::unordered_set<std::tuple<int, int, std::string>> gold_set;
+        std::unordered_set<std::tuple<long, long, std::string>> gold_set;
 
         for (auto& s: gold_segments) {
             if (int(s.start_time / 1e5) == int(s.end_time / 1e5)) {

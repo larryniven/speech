@@ -9,8 +9,8 @@ namespace speech {
     std::vector<std::string> load_label_batch(std::istream& is);
 
     struct segment {
-        int start_time; // in 1e-7 s
-        int end_time;
+        long start_time; // in 1e-7 s
+        long end_time;
         std::string label;
     };
 
