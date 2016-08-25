@@ -194,4 +194,24 @@ namespace speech {
         return clarkson_moreno_feature(utt, start, end, 0, nfeat - 1);
     }
 
+    void skip_batch(std::istream& is, int k)
+    {
+        int i = 0;
+
+        if (k <= 0) {
+            return;
+        }
+
+        std::string line;
+        while (std::getline(is, line)) {
+            if (line == ".") {
+                ++i;
+            }
+
+            if (i == k) {
+                break;
+            }
+        }
+    }
+
 }

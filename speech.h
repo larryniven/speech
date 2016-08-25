@@ -9,7 +9,7 @@ namespace speech {
     std::vector<std::string> load_label_batch(std::istream& is);
 
     struct segment {
-        long start_time; // in 1e-7 s
+        long start_time;
         long end_time;
         std::string label;
     };
@@ -28,6 +28,8 @@ namespace speech {
     std::vector<double> clarkson_moreno_feature(
         std::vector<std::vector<double>> utt, int start, int end,
         int start_dim, int end_dim);
+
+    void skip_batch(std::istream& is, int k);
 
 }
 
