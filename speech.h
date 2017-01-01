@@ -3,6 +3,7 @@
 
 #include <unordered_set>
 #include <vector>
+#include <fstream>
 
 namespace speech {
 
@@ -30,6 +31,14 @@ namespace speech {
         int start_dim, int end_dim);
 
     void skip_batch(std::istream& is, int k);
+
+    struct batch_indices {
+        std::ifstream stream;
+        std::vector<unsigned long> pos;
+    
+        void open(std::string filename);
+        std::ifstream& at(int i);
+    };
 
 }
 
