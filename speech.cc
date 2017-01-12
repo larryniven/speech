@@ -4,6 +4,49 @@
 
 namespace speech {
 
+    std::vector<std::string> load_label_seq(std::istream& is)
+    {
+        std::string line;
+        std::getline(is, line);
+
+        std::vector<std::string> parts;
+
+        if (is) {
+            parts = ebt::split(line);
+
+
+            if (ebt::startswith(parts.back(), "(") && ebt::endswith(parts.back(), ")")) {
+                parts.pop_back();
+            }
+        }
+
+        return parts;
+    }
+
+    std::vector<int> load_label_seq(std::istream& is,
+        std::unordered_map<std::string, int> const& label_id)
+    {
+        std::string line;
+        std::getline(is, line);
+
+        std::vector<std::string> parts;
+
+        if (is) {
+            parts = ebt::split(line);
+
+            if (ebt::startswith(parts.back(), "(") && ebt::endswith(parts.back(), ")")) {
+                parts.pop_back();
+            }
+        }
+
+        std::vector<int> result;
+        for (auto& s: parts) {
+            result.push_back(label_id.at(s));
+        }
+
+        return result;
+    }
+
     std::vector<std::string> load_label_batch(std::istream& is)
     {
         std::vector<std::string> result;
@@ -93,6 +136,23 @@ namespace speech {
         std::string line;
         while (std::getline(ifs, line)) {
             result.push_back(line);
+        }
+    
+        return result;
+    }
+
+    std::unordered_map<std::string, int> load_label_id(std::string filename)
+    {
+        std::unordered_map<std::string, int> result;
+        std::string line;
+        std::ifstream ifs { filename };
+
+        result["<eps>"] = 0;
+    
+        int i = 1;
+        while (std::getline(ifs, line)) {
+            result[line] = i;
+            ++i;
         }
     
         return result;

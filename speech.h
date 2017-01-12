@@ -4,8 +4,14 @@
 #include <unordered_set>
 #include <vector>
 #include <fstream>
+#include <unordered_map>
 
 namespace speech {
+
+    std::vector<std::string> load_label_seq(std::istream& is);
+
+    std::vector<int> load_label_seq(std::istream& is,
+        std::unordered_map<std::string, int> const& label_id);
 
     std::vector<std::string> load_label_batch(std::istream& is);
 
@@ -22,6 +28,8 @@ namespace speech {
     std::vector<std::vector<double>> load_frame_batch(std::istream& is, int nfeat=-1);
 
     std::vector<std::string> load_label_set(std::string filename);
+
+    std::unordered_map<std::string, int> load_label_id(std::string filename);
 
     std::vector<double> clarkson_moreno_feature(
         std::vector<std::vector<double>> utt, int start, int end, int nfeat=39);
