@@ -21,7 +21,7 @@ namespace speech {
         std::string label;
     };
 
-    std::vector<segment> load_segments(std::istream& is);
+    std::vector<segment> load_segment_batch(std::istream& is);
 
     std::vector<std::vector<double>> load_frames(std::string filename, int nfeat=-1);
 

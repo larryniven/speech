@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     while (std::getline(acoustic_list, acoustic_file)) {
         std::vector<std::vector<double>> acoustics = speech::load_frames(acoustic_file);
 
-        std::vector<speech::segment> gold_segments = speech::load_segments(gold_list);
+        std::vector<speech::segment> gold_segments = speech::load_segment_batch(gold_list);
 
         std::unordered_set<std::tuple<long, long, std::string>> gold_set;
 
@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
             label_file << phone_id.at(s.label) << std::endl;
         }
 
-        std::vector<speech::segment> lattice_segments = speech::load_segments(lattice_list);
+        std::vector<speech::segment> lattice_segments = speech::load_segment_batch(lattice_list);
 
         for (auto& s: lattice_segments) {
             if (int(s.start_time / 1e5) == int(s.end_time / 1e5)) {

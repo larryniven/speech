@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     while (std::getline(acoustic_list, acoustic_file)) {
         std::vector<std::vector<double>> acoustics = speech::load_frames(acoustic_file);
 
-        std::vector<speech::segment> segments = speech::load_segments(segment_list);
+        std::vector<speech::segment> segments = speech::load_segment_batch(segment_list);
 
         for (auto& s: segments) {
             if (int(s.start_time / 1e5) == int(s.end_time / 1e5)) {

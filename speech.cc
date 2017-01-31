@@ -60,7 +60,7 @@ namespace speech {
         return result;
     }
 
-    std::vector<segment> load_segments(std::istream& is)
+    std::vector<segment> load_segment_batch(std::istream& is)
     {
         std::vector<segment> result;
         std::string line;
