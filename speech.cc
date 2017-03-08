@@ -47,6 +47,24 @@ namespace speech {
         return result;
     }
 
+    std::vector<int> load_label_seq_batch(std::istream& is,
+        std::unordered_map<std::string, int> const& label_id)
+    {
+        std::vector<int> result;
+        std::string line;
+    
+        std::getline(is, line);
+        while (std::getline(is, line) && line != ".") {
+            auto parts = ebt::split(line);
+
+            for (auto& e: parts) {
+                result.push_back(label_id.at(e));
+            }
+        }
+    
+        return result;
+    }
+
     std::vector<std::string> load_label_batch(std::istream& is)
     {
         std::vector<std::string> result;
