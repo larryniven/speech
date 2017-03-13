@@ -163,7 +163,7 @@ namespace speech {
     std::vector<std::string> load_label_set(std::string filename)
     {
         std::vector<std::string> result;
-    
+
         std::ifstream ifs{filename};
     
         std::string line;
@@ -180,9 +180,7 @@ namespace speech {
         std::string line;
         std::ifstream ifs { filename };
 
-        result["<eps>"] = 0;
-    
-        int i = 1;
+        int i = 0;
         while (std::getline(ifs, line)) {
             result[line] = i;
             ++i;
