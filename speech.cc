@@ -65,6 +65,21 @@ namespace speech {
         return result;
     }
 
+    std::vector<std::string> load_label_seq_batch(std::istream& is)
+    {
+        std::vector<std::string> result;
+        std::string line;
+    
+        std::getline(is, line);
+        while (std::getline(is, line) && line != ".") {
+            auto parts = ebt::split(line);
+
+            result.insert(result.end(), parts.begin(), parts.end());
+        }
+    
+        return result;
+    }
+
     std::vector<std::string> load_label_batch(std::istream& is)
     {
         std::vector<std::string> result;

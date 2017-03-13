@@ -16,6 +16,8 @@ namespace speech {
     std::vector<int> load_label_seq_batch(std::istream& is,
         std::unordered_map<std::string, int> const& label_id);
 
+    std::vector<std::string> load_label_seq_batch(std::istream& is);
+
     std::vector<std::string> load_label_batch(std::istream& is);
 
     struct segment {
