@@ -5,7 +5,7 @@ AR = gcc-ar
 
 bin = gen343 gen-edges-343 label-frames cat-frames shuffle-frames
 
-all: libspeech.a $(bin)
+all: libspeech.a
 
 clean:
 	-rm *.o
