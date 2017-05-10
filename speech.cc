@@ -93,23 +93,6 @@ namespace speech {
         return result;
     }
 
-    std::vector<std::vector<std::string>> load_label_batches(std::istream& is, int batch_size)
-    {
-        std::vector<std::vector<std::string>> result;
-
-        for (int i = 0; i < batch_size; ++i) {
-            auto item = load_label_batch(is);
-
-            if (is) {
-                result.push_back(item);
-            } else {
-                break;
-            }
-        }
-
-        return result;
-    }
-
     std::vector<segment> load_segment_batch(std::istream& is)
     {
         std::vector<segment> result;
@@ -177,23 +160,6 @@ namespace speech {
         return result;
     }
     
-    std::vector<std::vector<std::vector<double>>> load_frame_batches(std::istream& is, int batch_size, int nfeat)
-    {
-        std::vector<std::vector<std::vector<double>>> result;
-
-        for (int i = 0; i < batch_size; ++i) {
-            auto item = load_frame_batch(is, nfeat);
-
-            if (is) {
-                result.push_back(item);
-            } else {
-                break;
-            }
-        }
-
-        return result;
-    }
-
     std::vector<std::string> load_label_set(std::string filename)
     {
         std::vector<std::string> result;

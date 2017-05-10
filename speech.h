@@ -19,7 +19,6 @@ namespace speech {
     std::vector<std::string> load_label_seq_batch(std::istream& is);
 
     std::vector<std::string> load_label_batch(std::istream& is);
-    std::vector<std::vector<std::string>> load_label_batches(std::istream& is, int batch_size);
 
     struct segment {
         long start_time;
@@ -32,8 +31,6 @@ namespace speech {
     std::vector<std::vector<double>> load_frames(std::string filename, int nfeat=-1);
 
     std::vector<std::vector<double>> load_frame_batch(std::istream& is, int nfeat=-1);
-    std::vector<std::vector<std::vector<double>>> load_frame_batches(
-        std::istream& is, int batch_size, int nfeat=-1);
 
     std::vector<std::string> load_label_set(std::string filename);
 
