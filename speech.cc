@@ -331,9 +331,50 @@ namespace speech {
         ifs.close();
     }
 
-    std::ifstream& batch_indices::at(int i)
+    std::istream& batch_indices::at(int i)
     {
         stream.seekg(pos.at(i));
         return stream;
     }
+
+    void scp::open(std::string filename)
+    {
+        std::ifstream ifs { filename };
+
+        if (!ifs) {
+            throw std::logic_error("unable to open " + filename);
+        }
+
+        entries.clear();
+
+        std::string line;
+
+        while (std::getline(ifs, line)) {
+            auto parts = ebt::split(line);
+
+            entry e;
+
+            e.key = parts[0];
+
+            parts = ebt::split(parts[1], ":");
+
+            e.filename = parts[0];
+            e.shift = std::stol(parts[1]);
+
+            entries.push_back(e);
+        }
+    }
+
+    std::istream& scp::at(int i)
+    {
+        if (filename_ == nullptr || *filename_ != entries[i].filename) {
+            filename_ = std::make_shared<std::string>(entries[i].filename);
+            ifs_ = std::make_shared<std::ifstream>(std::ifstream { entries[i].filename });
+        }
+
+        ifs_->seekg(entries[i].shift);
+
+        return *ifs_;
+    }
+
 }

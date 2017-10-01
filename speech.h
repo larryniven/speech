@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <unordered_map>
+#include <memory>
 
 namespace speech {
 
@@ -50,7 +51,23 @@ namespace speech {
         std::vector<unsigned long> pos;
     
         void open(std::string filename);
-        std::ifstream& at(int i);
+        std::istream& at(int i);
+    };
+
+    struct scp {
+        struct entry {
+            std::string key;
+            std::string filename;
+            unsigned long shift;
+        };
+
+        std::vector<entry> entries;
+
+        std::shared_ptr<std::ifstream> ifs_;
+        std::shared_ptr<std::string> filename_;
+
+        void open(std::string filename);
+        std::istream& at(int i);
     };
 
 }
