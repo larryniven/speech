@@ -5,7 +5,7 @@ AR = gcc-ar
 
 bin = gen343 gen-edges-343 label-frames cat-frames shuffle-frames
 
-all: libspeech.a
+all: libutil.a
 
 clean:
 	-rm *.o
@@ -26,8 +26,8 @@ label-frames: label-frames.o libspeech.a
 shuffle-frames: shuffle-frames.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ -lebt
 
-libspeech.a: speech.o
+libutil.a: batch.o speech.o
 	$(AR) rcs $@ $^
 
 speech.o: speech.h
-
+batch.o: batch.h
