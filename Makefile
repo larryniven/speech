@@ -26,8 +26,9 @@ label-frames: label-frames.o libspeech.a
 shuffle-frames: shuffle-frames.o
 	$(CXX) $(CXXFLAGS) -o $@ $^ -lebt
 
-libutil.a: batch.o speech.o
+libutil.a: util.o batch.o speech.o
 	$(AR) rcs $@ $^
 
+util.o: util.h
 speech.o: speech.h
 batch.o: batch.h
