@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include <istream>
+#include <fstream>
 #include <memory>
 
 namespace batch {
@@ -17,7 +17,7 @@ namespace batch {
 
         std::vector<entry> entries;
 
-        std::shared_ptr<std::ifstream> ifs_;
+        std::ifstream ifs_;
         std::shared_ptr<std::string> filename_;
 
         void open(std::string filename);

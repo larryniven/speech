@@ -37,12 +37,12 @@ namespace batch {
     {
         if (filename_ == nullptr || *filename_ != entries[i].filename) {
             filename_ = std::make_shared<std::string>(entries[i].filename);
-            ifs_ = std::make_shared<std::ifstream>(std::ifstream { entries[i].filename });
+            ifs_.open(entries[i].filename);
         }
 
-        ifs_->seekg(entries[i].shift);
+        ifs_.seekg(entries[i].shift);
 
-        return *ifs_;
+        return ifs_;
     }
 
     std::vector<double> load_feats(std::istream& is)
