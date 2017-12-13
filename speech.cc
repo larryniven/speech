@@ -141,7 +141,9 @@ namespace speech {
         std::string line;
 
         // read and discard file name
-        std::getline(is, line);
+        if (!std::getline(is, line)) {
+            throw std::logic_error("unable to read stream");
+        }
     
         while (std::getline(is, line) && line != ".") {
             std::vector<double> vec;

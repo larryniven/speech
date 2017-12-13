@@ -37,12 +37,21 @@ namespace batch {
     {
         if (filename_ == nullptr || *filename_ != entries[i].filename) {
             filename_ = std::make_shared<std::string>(entries[i].filename);
+
+            if (ifs_.is_open()) {
+                ifs_.close();
+            }
+
             ifs_.open(entries[i].filename);
         }
 
         ifs_.seekg(entries[i].shift);
 
-        return ifs_;
+        if (ifs_) {
+            return ifs_;
+        } else {
+            throw std::logic_error("seek failed while reading scp");
+        }
     }
 
     std::vector<double> load_feats(std::istream& is)

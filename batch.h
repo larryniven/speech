@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <memory>
+#include <ios>
 
 namespace batch {
 
@@ -12,7 +13,7 @@ namespace batch {
         struct entry {
             std::string key;
             std::string filename;
-            unsigned long shift;
+            std::streampos shift;
         };
 
         std::vector<entry> entries;

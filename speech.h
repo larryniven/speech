@@ -33,8 +33,6 @@ namespace speech {
 
     std::vector<std::vector<double>> load_frame_batch(std::istream& is, int nfeat=-1);
 
-    std::unordered_map<std::string, int> load_label_id(std::string filename);
-
     std::vector<double> clarkson_moreno_feature(
         std::vector<std::vector<double>> utt, int start, int end, int nfeat=39);
 
